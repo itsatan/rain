@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript案例：下雨特效 [www.uzcode.cn]</title>
+    <style>
+      body {
+        width: 100%;
+        height: 100%;
+        background: url(./images/bg.jpg) no-repeat;
+        background-size: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      setInterval(function () {
+        // 创建rain元素
+        var rain = document.createElement('div')
+
+        // 初始化rain属性
+        rain.style.position = 'fixed'
+        rain.style.width = '1px'
+        rain.style.height = '60px'
+        rain.style.background = 'url(./images/rain.jpg)'
+        rain.style.filter = 'blur(1px)' //滤镜 给图像设置高斯模糊
+        rain.style.top = '8px'
+        rain.style.left = Math.random() * 1920 + 'px' //随机化位置
+        rain.style.opacity = parseInt(Math.random() * 10) / 10 + '' //随机化透明度
+
+        // 向body中添加子节点
+        document.body.appendChild(rain)
+
+        var timer = setInterval(function () {
+          var height = parseInt(rain.style.top)
+          var k = 1
+          k++
+
+          rain.style.top = height + 5 * Math.pow(k, 2) + 'px' // 模拟重力加速度
+
+          // 当雨滴到达底部消失 清除子节点rain
+          if (rain.style.top >= '900px') {
+            clearInterval(timer)
+            rain.parentNode.removeChild(rain)
+          }
+        }, 10) // 每10毫秒雨滴下落一次
+      }, 10) // 每隔10毫秒生成一次雨滴
+    </script>
+  </body>
+</html>
